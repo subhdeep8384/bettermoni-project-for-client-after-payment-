@@ -6,5 +6,7 @@ app.use(express.json()) ;
 app.use(express.urlencoded({extended:true}))
 
 
+
+app.use("/user" , userRouter)
 app.use("/website" , websiteRouter)
 app.use("/status/:websiteId" , statusRouter )
