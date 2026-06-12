@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -8,9 +7,33 @@ datasource db {
   provider = "postgresql"
 }
 
-model User { 
-  id    Int     @id @default(autoincrement()) 
-  email String  @unique
-  name  String?
- 
-} 
+model Website {
+  id        String        @id @default(uuid())
+  url       String
+  timeAdded DateTime
+  tick      WebsiteTick[]
+}
+
+model Region {
+  id    String        @id @default(uuid())
+  name  String
+  ticks WebsiteTick[]
+}
+
+model WebsiteTick {
+  id              String        @id @default(uuid())
+  responseTime_ms Int
+  status          WebsiteStatus
+
+  regionId  String
+  websiteId String
+
+  region  Region  @relation(fields: [regionId], references: [id])
+  website Website @relation(fields: [websiteId], references: [id])
+}
+
+enum WebsiteStatus {
+  Up
+  Down
+  Unknown
+}
