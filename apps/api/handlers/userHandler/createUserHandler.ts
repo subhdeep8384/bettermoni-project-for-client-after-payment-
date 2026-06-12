@@ -3,7 +3,7 @@ import {prisma } from "db/prisma"
 
 import  {type User , userSchema} from "../../types/user.type" 
 
-export async function createuser( res : Response , req : Request){
+export async function createuser( req : Request , res : Response){
     const data = userSchema.safeParse(req.body) ;
     
     if(data.error){
@@ -30,6 +30,6 @@ export async function createuser( res : Response , req : Request){
     }
     return res.status(201).json({
         message : "User created successfully", 
-        data : user.email
+        data : user
     })
 } 

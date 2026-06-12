@@ -2,12 +2,12 @@ import { prisma } from "db/prisma"
 import type {Response , Request , NextFunction} from "express"
 import {z} from "zod"
 
-const userSchema = z.object({
+const getUserSchema = z.object({
     id : z.string() ,
     name : z.string() ,
 })
-async function getUser(req :Request  , res :Response ) {
-    const data = userSchema.safeParse(req.body);
+export async function getUser(req :Request  , res :Response ) {
+    const data = getUserSchema.safeParse(req.body);
 
     if(data.error){
         return res.status(500).json({

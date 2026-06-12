@@ -21,7 +21,7 @@ describe("website gets created", () => {
     try{
         const response =  await axios.post(`${process.env.BASE_URL}/website`, {
             url : "www.google.com" ,
-            user_id : "a22234324"
+            user_id : "9dadba9f-89b8-40af-a2fd-7ecda0ccfe96"
         });
         expect(response.status).toBe(201) ;
         expect(response.data).toHaveProperty("id")
