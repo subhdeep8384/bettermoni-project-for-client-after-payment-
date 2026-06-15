@@ -1,6 +1,7 @@
 import type { Response , Request  } from "express";
 import { signUpSchema } from "../../types/user.type";
 import { prisma } from "db/prisma";
+import { hashPassword } from "../../utils/hashPassword";
 export async function signup (req : Request , res : Response){
     try{
         const data = signUpSchema.safeParse(req.body) ;
@@ -8,11 +9,16 @@ export async function signup (req : Request , res : Response){
             throw new TypeError("required field missing") ;
         }
         const {name , email , password } = data.data;
+        const hashedPassword = await hashPassword(password) ;
         const user = await prisma.user.create({
             data:{
                 name : name ,
-                password : password ,
+                password : hashedPassword ,
                 email : email 
+            },
+            select:{
+                id : true,
+                email : true
             }
         })
 
