@@ -6,30 +6,15 @@ const getUserSchema = z.object({
     id : z.string() ,
     name : z.string() ,
 })
-export async function getUser(req :Request  , res :Response ) {
-    const data = getUserSchema.safeParse(req.body);
-
-    if(data.error){
-        return res.status(500).json({
-            mesasge : "server error"
-        })
+interface userReq extends Request{
+    user? :{
+        name : string ,
+        email : string
     }
-
-    const {id , name } = data.data 
-    const user = await prisma.user.findFirst({
-        where: {
-            name : name ,
-            id : id 
-        }
-    })
-    if(!user){
-        return res.status(400).json({
-            message : "user not found" 
-        })
-    }
-
-    return res.status(201).json({
-        message : "user found" ,
-        data : user
+}
+export async function getUser(req :userReq  , res :Response ) {
+    console.log(req.user)
+    return res.json({
+        message : "done" ,
     })
 }

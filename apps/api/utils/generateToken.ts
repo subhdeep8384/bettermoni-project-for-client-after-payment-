@@ -18,7 +18,9 @@ export function createToken(data :{
 export function verifyToken(token : string )  {
     try{
         const decoded  = jwt.verify(token , process.env.JWT!)
-        return decoded as jwt.JwtPayload
+        return decoded as {
+            email: string
+        };
     }catch(e){
         console.log(e)
     }
