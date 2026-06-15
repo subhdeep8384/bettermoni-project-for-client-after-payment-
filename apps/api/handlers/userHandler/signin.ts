@@ -38,7 +38,8 @@ export async function signin (req : Request , res :Response){
         
     }catch(e){
         res.status(500).json({
-
+            message : "something went wrong" ,
+            data : e
         })
     }
 }
