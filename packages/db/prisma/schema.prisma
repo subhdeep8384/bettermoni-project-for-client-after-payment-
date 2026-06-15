@@ -40,6 +40,8 @@ model WebsiteTick {
 
   region  Region  @relation(fields: [regionId], references: [id])
   website Website @relation(fields: [websiteId], references: [id])
+
+  created_At DateTime @default(now())
 }
 
 enum WebsiteStatus {

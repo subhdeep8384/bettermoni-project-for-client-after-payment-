@@ -5,5 +5,13 @@ export  const userSchema = z.object({
     password : z.string().min(6).max(20) 
 })
 
+
+export const signUpSchema = z.object({
+    name : z.string().min(3).max(20) ,
+    email : z.email(),
+    password : z.string().min(6).max(20)  
+})
+
 export type User = z.infer<typeof userSchema>
+export type SignUpSchema = z.infer<typeof signUpSchema>
  
