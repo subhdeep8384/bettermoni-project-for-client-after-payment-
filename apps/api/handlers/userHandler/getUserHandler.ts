@@ -1,4 +1,3 @@
-import { prisma } from "db/prisma"
 import type {Response , Request , NextFunction} from "express"
 import {z} from "zod"
 
@@ -12,7 +11,7 @@ interface userReq extends Request{
         email : string
     }
 }
-export async function getUser(req :userReq  , res :Response ) {
+export async function getUser(req : userReq  , res :Response ) {
     console.log(req.user)
     return res.json({
         message : "done" ,
