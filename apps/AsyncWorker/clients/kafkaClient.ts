@@ -14,46 +14,8 @@ export const kafka = new Kafka({
         password: process.env.KAFKA_PASSWORD!   
     },
     retry :{
-        retries:2
+        retries:5
     },
     connectionTimeout : 5000
 })
 
-async function main() {
-
-  const producer =
-    kafka.producer();
-
-  try {
-
-    console.log("connecting");
-
-    await producer.connect();
-
-    console.log("connected");
-
-    await producer.send({
-      topic: "test",
-
-      messages: [
-        {
-          value: "hello"
-        }
-      ]
-    });
-
-    console.log("message sent");
-
-  } catch (err) {
-
-    console.log(err);
-
-  } finally {
-
-    await producer.disconnect();
-
-    process.exit(0);
-  }
-}
-
-await main();
