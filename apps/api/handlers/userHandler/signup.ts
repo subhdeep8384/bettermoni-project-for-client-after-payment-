@@ -28,11 +28,12 @@ export async function signup (req : Request , res : Response){
             throw new Error("cannot create user");
         }
 
-        await axios.post(`${process.env.MAIL_SERVER}/sendMail`,{
+        const result =  await axios.post(`${process.env.MAIL_SERVER}/sendMail`,{
             email : email , 
             subject : "Welcome"
         })
-        
+        console.log(result)
+
         return res.status(201).json({
             message : "User created",
             data : user 

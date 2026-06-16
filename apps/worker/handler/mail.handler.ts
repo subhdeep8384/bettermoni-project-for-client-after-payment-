@@ -14,7 +14,13 @@ export async function mailHandler(req : Request , res : Response ){
             throw new Error("required filed missing")
         }
         const {email , subject} = data.data
-        await sendLoginMail(email , subject)
+        const result = await sendLoginMail(email , subject)
+        if(result){
+            return res.status(201).json({
+                message : "email send" 
+            })
+        }
+        throw  new Error("email server died")
         
     }catch(e){
         res.status(500).json({

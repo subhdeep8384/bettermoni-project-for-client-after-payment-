@@ -9,16 +9,23 @@ const resend = new Resend(
     process.env.RESEND_API_KEY
 );
 
-export async function sendLoginMail(email : string , subject : string ){
+export async function sendLoginMail(email : string , subject : string ) : Promise<boolean>{
 
-    const name : string =  getNameFromMail(email)
-
-    await resend.emails.send({
-        from: "onboarding@resend.dev", 
-        to: email,
-        subject: subject,
-        html: welcomeMail(name , "betterstack")
-    })
+    try{
+        const name : string =  getNameFromMail(email)
+        const res =  await resend.emails.send({
+            from: "onboarding@resend.dev", 
+            to: email,
+            subject: subject,
+            html: welcomeMail(name , "betterstack")
+        })
+        if(res.error){
+            throw new Error("email error")
+        }
+        return true ;
+    }catch(e){
+        return false ;
+    }
 }
 
 
