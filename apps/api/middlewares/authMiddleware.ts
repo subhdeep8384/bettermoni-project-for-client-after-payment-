@@ -22,6 +22,7 @@ export async function authMiddleware(req : userReq , res : Response , next : Nex
                 email : data?.email 
             }, 
             select:{
+                id : true ,
                 name : true ,
                 email : true ,
             }

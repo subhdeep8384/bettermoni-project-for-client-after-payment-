@@ -1,10 +1,8 @@
 import { Router } from "express";
 import type { Response , Request , NextFunction } from "express";
 import { authMiddleware } from "../middlewares/authMiddleware";
-import { extend } from "zod/mini";
 import z from "zod";
 import { prisma } from "db/prisma";
-import { id } from "zod/locales";
 const router = Router() ;
 
 interface Reqparams extends Request{
@@ -55,7 +53,7 @@ router.get("/:website" ,authMiddleware ,async (req : Reqparams, res : Response) 
             }
         })
         if(!website){
-            return res.status(400).json({
+            return res.status(409).json({
                 message : "No website available for "+ username +" create first"
             })
         }

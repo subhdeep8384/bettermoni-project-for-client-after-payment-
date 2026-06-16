@@ -2,6 +2,7 @@ import type { Response , Request  } from "express";
 import { signUpSchema } from "../../types/user.type";
 import { prisma } from "db/prisma";
 import { hashPassword } from "../../utils/hashPassword";
+import axios from "axios";
 export async function signup (req : Request , res : Response){
     try{
         const data = signUpSchema.safeParse(req.body) ;
@@ -18,13 +19,20 @@ export async function signup (req : Request , res : Response){
             },
             select:{
                 id : true,
-                email : true
+                email : true,
+                name : true 
             }
         })
 
         if(!user){
             throw new Error("cannot create user");
         }
+
+        await axios.post(`${process.env.MAIL_SERVER}/sendMail`,{
+            email : email , 
+            subject : "Welcome"
+        })
+        
         return res.status(201).json({
             message : "User created",
             data : user 
